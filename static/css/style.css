@@ -1,0 +1,67 @@
+/* h1{
+    color:darkblue;
+    font-size:60px;
+}
+
+body{
+    background:pink;
+} */
+
+
+
+/* Reset some default styles */
+/* * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+} */
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #E0F7FA, #B2EBF2);
+    color: #37474F;
+   
+}
+
+/* .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+} */
+
+h1 {
+    color: #00008B;
+    font-size: 48px;
+    text-align: center;
+    margin-bottom: 30px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Add styles for other elements */
+p {
+    margin-bottom: 15px;
+}
+
+a {
+    color: #4169E1;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #1E90FF;
+}
+
+/* Responsive design
+@media (max-width: 768px) {
+    h1 {
+        font-size: 36px;
+    }
+
+    .container {
+        padding: 15px;
+    }
+} */

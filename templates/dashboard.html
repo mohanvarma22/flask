@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        {{ message }} 
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+
+    <h2>Dashboard</h2>
+    <br/><br/>
+    <div class="card">
+        <div class="card-header">
+            {{ current_user.name }}
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Welcome to your user dashboard</h5>
+
+            <div class="container"> 
+                <div class="row">
+                    <!-- Left side: User info -->
+                    <div class="col-8">
+                        <p class="card-text">
+                            <strong>Name:</strong> {{ current_user.name }}<br/>
+                            <strong>Username:</strong> {{ current_user.username }}<br/>
+                            <strong>User Id:</strong> {{ current_user.id }}<br/>
+                            <strong>Email:</strong> {{ current_user.email }}<br/>
+                            <strong>Favorite Color:</strong> {{ current_user.favorite_color }}<br/>
+                            <strong>About Author</strong> {{ current_user.about_author }}<br/>
+                            
+                            <strong>Date Joined:</strong> {{ current_user.date_added }}<br/>
+                        </p>
+                        <a href="{{ url_for('logout') }}" class="btn btn-secondary btn-sm">Logout</a>
+                        <a href="{{ url_for('update', id=current_user.id) }}" class="btn btn-secondary btn-sm">Update Profile</a>
+                        <a href="{{ url_for('delete', id=current_user.id) }}" class="btn btn-danger btn-sm">Delete</a>
+                    </div>
+
+                    <!-- Right side: Profile picture -->
+                    <div class="col-4">
+                        <img src="{{ url_for('static', filename='images/Blank_profile_pic.png') }}" class="img-fluid float-end" width="150" alt="Profile Picture">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
