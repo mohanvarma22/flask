@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>Confirm Post Deletion</h2>
+<br/>
+<div class="alert alert-danger" role="alert">
+    <h4 class="alert-heading">Warning!</h4>
+    <p>Are you sure you want to delete the post "{{ post.title }}"? This action cannot be undone.</p>
+    <hr>
+    <p class="mb-0">
+        <a href="{{ url_for('delete_post', id=post.id) }}" class="btn btn-danger">Yes, Delete Post</a>
+        <a href="{{ url_for('posts') }}" class="btn btn-secondary">No, Keep Post</a>
+    </p>
+</div>
+
+{% endblock %}

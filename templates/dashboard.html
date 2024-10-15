@@ -1,49 +1,68 @@
 {% extends 'base.html' %}
 {% block content %}
 
-    {% for message in get_flashed_messages() %}
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        {{ message }} 
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+{% for message in get_flashed_messages() %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+
+<h2>Dashboard</h2>
+<br/><br/>
+<div class="card">
+    <div class="card-header">
+        {{ current_user.name }}
     </div>
-    {% endfor %}
+    <div class="card-body">
+        <h5 class="card-title">Welcome to your user dashboard</h5>
 
-    <h2>Dashboard</h2>
-    <br/><br/>
-    <div class="card">
-        <div class="card-header">
-            {{ current_user.name }}
-        </div>
-        <div class="card-body">
-            <h5 class="card-title">Welcome to your user dashboard</h5>
+        <div class="container">
+            <div class="row">
+                <!-- Left side: User info -->
+                <div class="col-8">
+                    <p class="card-text">
+                        <strong>Name:</strong> {{ current_user.name }}<br/>
+                        <strong>Username:</strong> {{ current_user.username }}<br/>
+                        <strong>User Id:</strong> {{ current_user.id }}<br/>
+                        <strong>Email:</strong> {{ current_user.email }}<br/>
+                        <strong>Favorite Color:</strong> {{ current_user.favorite_color }}<br/>
+                        <strong>About Author</strong> {{ current_user.about_author }}<br/>
+                        <strong>Date Joined:</strong> {{ current_user.date_added }}<br/>
+                    </p>
+                    <a href="{{ url_for('logout') }}" class="btn btn-secondary btn-sm">Logout</a>
+                    <a href="{{ url_for('update', id=current_user.id) }}" class="btn btn-secondary btn-sm">Update Profile</a>
+                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">
+                        Delete
+                    </button>
+                </div>
 
-            <div class="container"> 
-                <div class="row">
-                    <!-- Left side: User info -->
-                    <div class="col-8">
-                        <p class="card-text">
-                            <strong>Name:</strong> {{ current_user.name }}<br/>
-                            <strong>Username:</strong> {{ current_user.username }}<br/>
-                            <strong>User Id:</strong> {{ current_user.id }}<br/>
-                            <strong>Email:</strong> {{ current_user.email }}<br/>
-                            <strong>Favorite Color:</strong> {{ current_user.favorite_color }}<br/>
-                            <strong>About Author</strong> {{ current_user.about_author }}<br/>
-                            
-                            <strong>Date Joined:</strong> {{ current_user.date_added }}<br/>
-                        </p>
-                        <a href="{{ url_for('logout') }}" class="btn btn-secondary btn-sm">Logout</a>
-                        <a href="{{ url_for('update', id=current_user.id) }}" class="btn btn-secondary btn-sm">Update Profile</a>
-                        <a href="{{ url_for('delete', id=current_user.id) }}" class="btn btn-danger btn-sm">Delete</a>
-                    </div>
-
-                    <!-- Right side: Profile picture -->
-                    <div class="col-4">
-                        <img src="{{ url_for('static', filename='images/Blank_profile_pic.png') }}" class="img-fluid float-end" width="150" alt="Profile Picture">
-                    </div>
+                <!-- Right side: Profile picture -->
+                <div class="col-4">
+                    <img src="{{ url_for('static', filename='images/Blank_profile_pic.png') }}" class="img-fluid float-end" width="150" alt="Profile Picture">
                 </div>
             </div>
         </div>
     </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="deleteConfirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteConfirmModalLabel">Confirm Deletion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Do you really want to delete your account?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <a href="{{ url_for('delete', id=current_user.id) }}" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}
-

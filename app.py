@@ -288,7 +288,16 @@ def is_valid_password(password):
         return False
     
     return True
-    
+
+@app.route('/posts/delete/confirm/<int:id>')
+@login_required
+def delete_post_confirm(id):
+    post = Posts.query.get_or_404(id)
+    if post.poster_id != current_user.id:
+        flash("You can only delete your own posts!")
+        return redirect(url_for('posts'))
+    return render_template("delete_post_confirm.html", post=post)   
+
 @app.route('/delete/<int:id>')
 @login_required
 def delete(id):
@@ -352,10 +361,10 @@ def index():
     return render_template('index.html',first_name=first_name,favorite_food=favorite_food)
                         #  stuff=stuff  
 
-@app.route('/user/<name>')
+# @app.route('/user/<name>')
 
-def user(name):
-    return render_template('user.html',user_name=name)
+# def user(name):
+#     return render_template('user.html',user_name=name)
 
 #Create custom error pages
 
@@ -369,15 +378,15 @@ def page_not_found(e):
 def page_not_found(e):
     return render_template('500.html'),500
 
-@app.route('/name',methods=['GET','POST'])
-def name():
-    name=None
-    form=NamerForm()
-    if form.validate_on_submit():
-        name=form.name.data
-        form.name.data=''
-        flash("submitted the form successfully")
-    return render_template("name.html",name=name,form=form)
+# @app.route('/name',methods=['GET','POST'])
+# def name():
+#     name=None
+#     form=NamerForm()
+#     if form.validate_on_submit():
+#         name=form.name.data
+#         form.name.data=''
+#         flash("submitted the form successfully")
+#     return render_template("name.html",name=name,form=form)
 
 @app.route('/test_pw',methods=['GET','POST'])
 def test_pw():

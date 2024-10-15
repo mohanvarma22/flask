@@ -26,7 +26,7 @@ class PostForm(FlaskForm):
 
 #create a user form
 class UserForm(FlaskForm):
-    name=StringField("What's Your name babes",validators=[DataRequired()])#validators kuda chala untay such as email,equalto extra
+    name=StringField("What's your name",validators=[DataRequired()])#validators kuda chala untay such as email,equalto extra
     username=StringField("username",validators=[DataRequired()])
     email=StringField("email",validators=[DataRequired()])
     favorite_color=StringField("Favorite color")
@@ -42,5 +42,5 @@ class PasswordForm(FlaskForm):
 
 #create a form class
 class NamerForm(FlaskForm):
-    name=StringField("What's Your name babes",validators=[DataRequired()])#validators kuda chala untay such as email,equalto extra
+    name=StringField("What's Your name",validators=[DataRequired()])#validators kuda chala untay such as email,equalto extra
     submit=SubmitField("Submit")
