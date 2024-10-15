@@ -6,6 +6,7 @@ from werkzeug.security import generate_password_hash,check_password_hash
 from flask_login import UserMixin,login_user,LoginManager,logout_user,current_user,login_required
 from webforms import LoginForm,PostForm,UserForm,NamerForm,PasswordForm,SearchForm
 from flask_ckeditor import CKEditor
+import re
 #create a flask instance
 app=Flask(__name__)
 #add ckeditor
@@ -200,7 +201,8 @@ def edit_post(id):
         return render_template('posts.html',posts=posts)
 
 @app.route('/add-post',methods=['GET','POST'])
-#@login_required easiest way to redirect the user if he is not logged in
+@login_required
+#  easiest way to redirect the user if he is not logged in
 def add_post():
     form=PostForm()
     if form.validate_on_submit():
@@ -217,27 +219,75 @@ def add_post():
     return render_template("add_post.html",form=form)
 
     
-@app.route('/user/add',methods=['GET','POST'])
+# @app.route('/user/add',methods=['GET','POST'])
+# def add_user():
+#     name=None
+#     form=UserForm()
+#     if form.validate_on_submit():
+#         user=Users.query.filter_by(email=form.email.data).first()
+#         if user is None:
+#             #hash the password
+#             hashed_pw=generate_password_hash(form.password_hash.data,"pbkdf2:sha256")
+#             user=Users(username=form.username.data,name=form.name.data,email=form.email.data,favorite_color=form.favorite_color.data,password_hash=hashed_pw)
+#             db.session.add(user)
+#             db.session.commit()
+#         name=form.name.data
+#         form.name.data=''
+#         form.username.data=''
+#         form.email.data=''
+#         form.favorite_color.data=''
+#         form.password_hash=''
+#         flash("been added successfully")
+#     our_users=Users.query.order_by(Users.date_added)
+#     return render_template("add_user.html",form=form,name=name,our_users=our_users)
+
+@app.route('/user/add', methods=['GET', 'POST'])
 def add_user():
-    name=None
-    form=UserForm()
+    name = None
+    form = UserForm()
     if form.validate_on_submit():
-        user=Users.query.filter_by(email=form.email.data).first()
+        # Password validation
+        password = form.password_hash.data
+        if not is_valid_password(password):
+            flash("Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number, and one special character.")
+            return render_template("add_user.html", form=form, name=name, our_users=Users.query.order_by(Users.date_added))
+
+        user = Users.query.filter_by(email=form.email.data).first()
         if user is None:
-            #hash the password
-            hashed_pw=generate_password_hash(form.password_hash.data,"pbkdf2:sha256")
-            user=Users(username=form.username.data,name=form.name.data,email=form.email.data,favorite_color=form.favorite_color.data,password_hash=hashed_pw)
+            # Hash the password
+            hashed_pw = generate_password_hash(password, "pbkdf2:sha256")
+            user = Users(username=form.username.data, name=form.name.data, email=form.email.data, favorite_color=form.favorite_color.data, password_hash=hashed_pw)
             db.session.add(user)
             db.session.commit()
-        name=form.name.data
-        form.name.data=''
-        form.username.data=''
-        form.email.data=''
-        form.favorite_color.data=''
-        form.password_hash=''
-        flash("been added successfully")
-    our_users=Users.query.order_by(Users.date_added)
-    return render_template("add_user.html",form=form,name=name,our_users=our_users)
+            name = form.name.data
+            form.name.data = ''
+            form.username.data = ''
+            form.email.data = ''
+            form.favorite_color.data = ''
+            form.password_hash.data = ''
+            flash("User has been added successfully")
+        else:
+            flash("Email already exists. Please use a different email.")
+    
+    our_users = Users.query.order_by(Users.date_added)
+    return render_template("add_user.html", form=form, name=name, our_users=our_users)
+
+def is_valid_password(password):
+    # Check if password is at least 8 characters long
+    if len(password) < 8:
+        return False
+    
+    # Check if password contains at least one uppercase letter, one lowercase letter, one number, and one special character
+    if not re.search(r'[A-Z]', password):
+        return False
+    if not re.search(r'[a-z]', password):
+        return False
+    if not re.search(r'\d', password):
+        return False
+    if not re.search(r'[!@#$%^&*(),.?":{}|<>]', password):
+        return False
+    
+    return True
     
 @app.route('/delete/<int:id>')
 @login_required
