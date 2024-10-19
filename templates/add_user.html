@@ -22,7 +22,7 @@
     <br/>
     <br/>
 {% else %}
-    <h1>User List:</h1>
+    <h1>Register</h1>
     <br/>
     <div class="shadow p-3 mb-5 bg-body-tertiary rounded">
     <form method="POST">
@@ -35,9 +35,7 @@
         <br/>
         {{ form.email.label(class="form-label") }}
         {{ form.email(class="form-control") }}
-        <br/>
-        {{ form.favorite_color.label(class="form-label") }}
-        {{ form.favorite_color(class="form-control") }}
+
         <br/>
         {{ form.password_hash.label(class="form-label") }}
         {{ form.password_hash(class="form-control") }}
@@ -53,12 +51,6 @@
 <br/>
 <br/>
 <br/>
-<table class="table table-hover table-bordered table-striped">
-{% for our_user in our_users %}
-    <tr>
-    <td>{{our_user.id}}.<a href="{{url_for('update',id=our_user.id)}}"> {{our_user.name}}</a> - {{our_user.username}} - {{ our_user.email }} - {{our_user.favorite_color}} <a href="{{url_for('delete',id=our_user.id)}}">Delete</a></td>
-    </tr>
-{% endfor %}
-</table>
+
 {% endif %}
 {% endblock %}

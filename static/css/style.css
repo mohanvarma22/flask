@@ -1,20 +1,4 @@
-/* h1{
-    color:darkblue;
-    font-size:60px;
-}
 
-body{
-    background:pink;
-} */
-
-
-
-/* Reset some default styles */
-/* * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-} */
 
 body {
     font-family: 'Arial', sans-serif;
@@ -23,14 +7,7 @@ body {
 }
 
 
-/* .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: rgba(255, 255, 255, 0.8);
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-} */
+
 
 h1 {
     color: #00008B;
@@ -55,13 +32,131 @@ a:hover {
     color: #1E90FF;
 }
 
-/* Responsive design
-@media (max-width: 768px) {
-    h1 {
-        font-size: 36px;
-    }
+.posts-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Space between the cards */
+    justify-content: flex-start; /* Align items to the left */
+}
 
-    .container {
-        padding: 15px;
-    }
-} */
+.post-card {
+    background-color: #f9f9f9; /* Soft neutral background for the cards */
+    border-radius: 15px; /* Rounded corners */
+    padding: 20px;
+    width: 300px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Softer shadow */
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease; /* Smooth transition */
+    position: relative;
+    overflow: hidden;
+    display: flex; /* Use flexbox */
+    flex-direction: column; /* Stack children vertically */
+    justify-content: space-between; /* Distribute space between elements */
+}
+
+.button-container {
+    display: flex; /* Use flexbox for alignment */
+    justify-content: flex-end; /* Align the button to the right */
+    margin-top: auto; /* Push this container to the bottom */
+}
+
+/* Button styling */
+.post-card a.btn {
+    background-color: #6b8e23; /* Muted sage green */
+    color: white; /* Text color */
+    border: none; /* No border */
+    border-radius: 15px; /* More rounded for a modern look */
+    padding: 8px 15px; /* Smaller padding for a smaller button */
+    text-align: center; /* Center text */
+    font-size: 0.8rem; /* Smaller font size */
+    font-weight: 600; /* Semi-bold text */
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+    display: inline-block; /* Ensure it behaves like a block for padding */
+    text-decoration: none; /* Remove underline */
+    cursor: pointer; /* Show a pointer on hover */
+}
+
+/* Hover Effect */
+.post-card a.btn:hover {
+    background-color: #556b2f; /* Darker sage green on hover */
+    transform: translateY(-2px); /* Slight lift on hover */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Subtle shadow on hover */
+}
+
+/* Active State for Click Feedback */
+.post-card a.btn:active {
+    transform: translateY(0); /* Reset lift on click */
+    box-shadow: none; /* Remove shadow on click */
+}
+
+
+
+
+/* Importing a Google Font (e.g., Poppins) */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+/* Hero section styling for Welcome with a new color gradient */
+/* Hero section styling for Welcome with an elegant, aesthetic gradient */
+.hero-section {
+    position: relative;
+    background: linear-gradient(135deg, #b8c6db, #f5d1e1); /* Soft grey-blue to lavender gradient */
+    padding: 60px 20px; /* Reduced vertical padding */
+    border-radius: 15px; /* Rounded corners */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    margin-bottom: 40px;
+    color: white; /* White text for contrast */
+}
+
+/* Adding a semi-transparent overlay to the background */
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.2); /* Soft dark overlay */
+    border-radius: 15px;
+    z-index: 0;
+}
+
+/* Ensures text stays on top of the overlay */
+.hero-title, .hero-subtitle, .hero-button {
+    position: relative;
+    z-index: 1; /* Ensures text and button are visible */
+}
+
+/* Hero title with white text and soft shadow for readability */
+.hero-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: white;
+    text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.5); /* Soft shadow */
+    margin: 0;
+}
+
+/* Hero subtitle */
+.hero-subtitle {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: #f0f8ff;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4); /* Soft shadow */
+    margin-bottom: 20px;
+}
+
+/* Button styling with a muted green for a calm, aesthetic feel */
+.hero-button {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.2rem;
+    padding: 10px 30px;
+    background-color: #6b8e23; /* Muted sage green */
+    color: white;
+    border: none;
+    border-radius: 50px; /* Rounded button */
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.hero-button:hover {
+    background-color: #556b2f; /* Darker sage green on hover */
+    transform: scale(1.05); /* Slight scaling effect */
+}

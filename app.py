@@ -1,4 +1,5 @@
 from flask import Flask,render_template,flash,request,redirect,url_for
+
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from datetime import datetime
@@ -6,9 +7,14 @@ from werkzeug.security import generate_password_hash,check_password_hash
 from flask_login import UserMixin,login_user,LoginManager,logout_user,current_user,login_required
 from webforms import LoginForm,PostForm,UserForm,NamerForm,PasswordForm,SearchForm
 from flask_ckeditor import CKEditor
+
+
 import re
+
 #create a flask instance
 app=Flask(__name__)
+
+
 #add ckeditor
 ckeditor=CKEditor(app)
 #add database
@@ -19,6 +25,7 @@ app.config['SQLALCHEMY_DATABASE_URI']='mysql+pymysql://root:1234@localhost/our_u
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 #secret key
 app.config['SECRET_KEY']="you are not supposed to know"
+
 #initialize a database
 db=SQLAlchemy(app)
 migrate=Migrate(app, db)
@@ -69,6 +76,16 @@ class Posts(db.Model):
 login_manager=LoginManager()
 login_manager.init_app(app)
 login_manager.login_view='login'
+
+@app.route("/")
+def index():
+    recent_posts = Posts.query.order_by(Posts.date_posted.desc()).limit(8).all()  
+    return render_template('index.html', recent_posts=recent_posts)
+    
+
+
+
+
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -156,7 +173,7 @@ def posts():
 def delete_post(id):
     post_to_delete=Posts.query.get_or_404(id)
     id=current_user.id
-    if id==post_to_delete.poster.id:
+    if id==post_to_delete.poster.id or id==22:
         
         try:
             db.session.delete(post_to_delete)
@@ -301,20 +318,23 @@ def delete_post_confirm(id):
 @app.route('/delete/<int:id>')
 @login_required
 def delete(id):
-    user_to_delete=Users.query.get_or_404(id)
-    name=None
-    form=UserForm()
-    try:
-        db.session.delete(user_to_delete)
-        db.session.commit()
-        flash("User Deleted Successfully")
-        our_users=Users.query.order_by(Users.date_added)
-        return render_template("add_user.html",form=form,name=name,our_users=our_users)
-    except:
-        flash("error!")
-        return render_template("add_user.html",form=form,name=name,our_users=our_users)
+    if id==current_user.id:
+        user_to_delete=Users.query.get_or_404(id)
+        name=None
+        form=UserForm()
+        try:
+            db.session.delete(user_to_delete)
+            db.session.commit()
+            flash("User Deleted Successfully")
+            our_users=Users.query.order_by(Users.date_added)
+            return render_template("add_user.html",form=form,name=name,our_users=our_users)
+        except:
+            flash("error!")
+            return render_template("add_user.html",form=form,name=name,our_users=our_users)
 
-
+    else:
+        flash("Only the admin can delete users")
+        return redirect(url_for('dashboard'))
 #Update database record
 @app.route('/update/<int:id>',methods=['GET','POST'])
 @login_required
@@ -348,18 +368,7 @@ def update(id):
     #file field
     #hidden field ila chala untay
 
-#route decorator
-@app.route('/')
 
-# def index():
-#     return "<h1> Hola </h1>"
-
-def index():
-    first_name="Mohan varma"
-    # stuff = "This is <strong>Bold</strong>"
-    favorite_food=["Biryani","Tandoori","Chapathi-chicken"]
-    return render_template('index.html',first_name=first_name,favorite_food=favorite_food)
-                        #  stuff=stuff  
 
 # @app.route('/user/<name>')
 

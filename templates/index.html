@@ -1,7 +1,25 @@
-{%extends 'base.html'%}
-{%block content%}
-<h1>Hi Guys I'm Mohan</h1>
-<p>This is my first webpage</p>
-<p>My name is {{first_name}}</p>
-<p>efad</p>
-{%endblock%}
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="hero-section text-center">
+    <h1 class="hero-title">Welcome</h1>
+    <br/>
+    <h2 class="hero-subtitle">Share Your Experiences</h2>
+    <a href="{{ url_for('add_post') }}" class="btn btn-lg btn-primary hero-button">Start Writing</a>
+</div>
+
+<h2>Recent Posts</h2>
+
+<div class="posts-container">
+    {% for post in recent_posts %}
+    <div class="post-card">
+        <h3><a href="{{ url_for('post', id=post.id) }}">{{ post.title }}</a></h3>
+        <p>by: {{ post.poster.name }}</p>
+        <p>{{ post.date_posted.strftime('%Y-%m-%d') }}</p>
+        <!-- Display only the first 150 characters of the post content -->
+        <a href="{{ url_for('post', id=post.id) }}" class="btn btn-primary btn-sm">Read More</a>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

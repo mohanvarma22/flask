@@ -20,7 +20,7 @@
     <br/>
     <a href="{{ url_for('post', id=post.id) }}" class="btn btn-primary mb-3 btn-sm">View Post</a>
 
-    {% if post.poster_id == current_user.id %}
+    {% if post.poster_id == current_user.id or current_user.id==22%}
     <a href="{{ url_for('edit_post', id=post.id) }}" class="btn btn-primary mb-3 btn-sm">Edit Post</a>
 
     <a href="{{ url_for('delete_post_confirm', id=post.id) }}" class="btn btn-danger mb-3 btn-sm">Delete Post</a>
