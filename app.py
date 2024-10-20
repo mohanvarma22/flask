@@ -113,7 +113,7 @@ def search():
 @login_required
 def admin():
     id=current_user.id 
-    if id==22:
+    if id==2:
         return render_template("admin.html")
     else:
         flash("Sorry you must be the admin to access this page")
@@ -314,7 +314,7 @@ def is_valid_password(password):
 @login_required
 def delete_post_confirm(id):
     post = Posts.query.get_or_404(id)
-    if post.poster_id != current_user.id:
+    if post.poster_id != current_user.id and current_user.id!=2:
         flash("You can only delete your own posts!")
         return redirect(url_for('posts'))
     return render_template("delete_post_confirm.html", post=post)   

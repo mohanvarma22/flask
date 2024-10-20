@@ -21,13 +21,29 @@
         {{form.username(class="form-control")}}
         <br/>
         {{form.password.label(class="form-label")}}
-        {{form.password(class="form-control")}}
+        <div class="input-group">
+            {{ form.password(class="form-control", id="passwordField") }}
+            <button type="button" class="btn btn-outline-secondary" id="togglePassword">Show</button>
+        </div>
         
         <br/>
         {{form.submit(class="btn btn-primary mb-3")}}
 
     </form>
     </div>
+    <script>
+        const passwordField = document.getElementById("passwordField");
+        const togglePassword = document.getElementById("togglePassword");
+    
+        togglePassword.addEventListener("click", function () {
+            // Toggle the type attribute
+            const type = passwordField.getAttribute("type") === "password" ? "text" : "password";
+            passwordField.setAttribute("type", type);
+    
+            // Toggle the button text
+            this.textContent = type === "password" ? "Show" : "Hide";
+        });
+    </script>
 
 
 {%endblock%}
