@@ -270,7 +270,8 @@ def add_user():
             return render_template("add_user.html", form=form, name=name, our_users=Users.query.order_by(Users.date_added))
 
         user = Users.query.filter_by(email=form.email.data).first()
-        if user is None:
+        username = Users.query.filter_by(username=form.username.data).first()
+        if user is None and username is None:
             # Hash the password
             hashed_pw = generate_password_hash(password, "pbkdf2:sha256")
             user = Users(username=form.username.data, name=form.name.data, email=form.email.data, favorite_color=form.favorite_color.data, password_hash=hashed_pw)
@@ -284,8 +285,10 @@ def add_user():
             form.password_hash.data = ''
             flash("You have been added successfully, You can login now")
             return redirect(url_for("login"))
+        elif username is None:
+            flash("Email already exists, please use a different email.")
         else:
-            flash("Email already exists. Please use a different email.")
+            flash("Username already exists, please use a different username.")
     
     our_users = Users.query.order_by(Users.date_added)
     return render_template("add_user.html", form=form, name=name, our_users=our_users)
