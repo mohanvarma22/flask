@@ -31,7 +31,8 @@
         {{form.about_author.label(class="form-label")}}
         {{form.about_author(class="form-control",value=name_to_update.about_author)}}<br/>
         {{form.submit(class="btn btn-secondary btn-sm")}}
-        <a href="{{url_for('delete',id=current_user.id)}}" class="btn btn-danger btn-sm">Delete</a><br/>
+        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">Delete</button>
+        
     </form>
     </div>
 <br/>
@@ -45,4 +46,21 @@
   <h2>Access Denied</h2>
 {%endif%}
 
+<div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="deleteConfirmModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="deleteConfirmModalLabel">Confirm Deletion</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              Do you really want to delete your account?
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <a href="{{ url_for('delete', id=current_user.id) }}" class="btn btn-danger">Delete</a>
+          </div>
+      </div>
+  </div>
+</div>
 {%endblock%}
