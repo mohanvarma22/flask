@@ -282,7 +282,8 @@ def add_user():
             form.email.data = ''
             form.favorite_color.data = ''
             form.password_hash.data = ''
-            flash("User has been added successfully")
+            flash("You have been added successfully, You can login now")
+            return redirect(url_for("login"))
         else:
             flash("Email already exists. Please use a different email.")
     
