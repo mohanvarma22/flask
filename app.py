@@ -173,7 +173,7 @@ def posts():
 def delete_post(id):
     post_to_delete=Posts.query.get_or_404(id)
     id=current_user.id
-    if id==post_to_delete.poster.id or id==22:
+    if id==post_to_delete.poster.id or id==2:
         
         try:
             db.session.delete(post_to_delete)
