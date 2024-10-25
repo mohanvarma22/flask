@@ -25,3 +25,5 @@ A search form allows users to search for posts by content.
 Responsive Design:
 
 The app is designed with responsiveness in mind, ensuring a smooth user experience across different devices.
+
+After making this fully functional I have deployed this is in aws ec2 server, YOU can access it from this link https://bit.ly/4059mjI
