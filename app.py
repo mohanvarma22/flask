@@ -28,10 +28,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 
-app.config['SQLALCHEMY_DATABASE_URI']='mysql+pymysql://root:1234@localhost/our_users'
 
-#secret key
-app.config['SECRET_KEY']="you are not supposed to know"
 
 #initialize a database
 db=SQLAlchemy(app)
