@@ -7,9 +7,11 @@ from werkzeug.security import generate_password_hash,check_password_hash
 from flask_login import UserMixin,login_user,LoginManager,logout_user,current_user,login_required
 from webforms import LoginForm,PostForm,UserForm,NamerForm,PasswordForm,SearchForm
 from flask_ckeditor import CKEditor
-
+from dotenv import load_dotenv
+load_dotenv()
 
 import re
+
 
 #create a flask instance
 app=Flask(__name__)
@@ -21,8 +23,13 @@ ckeditor=CKEditor(app)
 #old sql db
 # app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///Users.db'
 #new mysql db  'mysql://username:password@localhost/db_name
-app.config['SQLALCHEMY_DATABASE_URI']='mysql+pymysql://root:1234@localhost/our_users'
+import os
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+
+app.config['SQLALCHEMY_DATABASE_URI']='mysql+pymysql://root:1234@localhost/our_users'
+
 #secret key
 app.config['SECRET_KEY']="you are not supposed to know"
 
